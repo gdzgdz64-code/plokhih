@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: gdzgdz64-code/plokhih
+  branch: main
+  base_url: https://decap-cms-oauth-provider-black.vercel.app
+
+media_folder: "media/uploads"
+public_folder: "/media/uploads"
+
+collections:
+  - name: "pages"
+    label: "Страницы"
+    files:
+      - file: "content/home.md"
+        label: "Главная"
+        name: "home"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Текст", name: "body", widget: "markdown" }
+
+      - file: "content/about.md"
+        label: "О клубе"
+        name: "about"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Текст", name: "body", widget: "markdown" }
+
+  - name: "events"
+    label: "События"
+    folder: "content/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Дата", name: "date", widget: "datetime" }
+      - { label: "Цена", name: "price", widget: "number" }
+      - { label: "Описание", name: "body", widget: "markdown" }
+      - { label: "Картинка", name: "image", widget: "image" }
