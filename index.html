@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Клуб "Плохиш" — Скоро</title>
+  <link rel="icon" href="media/iconka.png" type="image/png">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Arial', sans-serif; }
+
+    body {
+      background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+      overflow: hidden;
+      position: relative;
+      color: #333;
+    }
+
+    /* Контент */
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: slideDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      max-width: 500px;
+      animation: slideUp 1s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #ff4b5c;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+      animation: fadeIn 1s ease 1s forwards;
+      opacity: 0;
+    }
+
+    .btn:hover {
+      background: #ff6f81;
+    }
+
+    .socials {
+      margin-top: 25px;
+      animation: fadeIn 1s ease 1.5s forwards;
+      opacity: 0;
+    }
+
+    .socials a {
+      margin: 0 15px;
+      color: #333;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      color: #ff4b5c;
+    }
+
+    /* Анимации */
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Адаптив */
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      p { font-size: 1.1rem; }
+      .btn { padding: 12px 25px; }
+      .socials a { font-size: 1.3rem; margin: 0 10px; }
+    }
+
+    /* Канвас для частиц */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="wrapper">
+  <h1>Клуб "Плохиш"</h1>
+  <p>Наш сайт скоро откроется! Следите за обновлениями и присоединяйтесь к нам в социальных сетях.</p>
+  <a href="https://vk.com/public186004438" class="btn" target="_blank">Наша группа ВКонтакте</a>
+
+  <div class="socials">
+    <a href="tel:+79513119411"> Позвонить</a>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+
+  const particles = [];
+  const particleCount = 100;
+
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function Particle() {
+    this.x = random(0, width);
+    this.y = random(0, height);
+    this.radius = random(2, 5);
+    this.speedX = random(-0.5, 0.5);
+    this.speedY = random(-0.5, 0.5);
+  }
+
+  Particle.prototype.update = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    if(this.x < 0 || this.x > width) this.speedX *= -1;
+    if(this.y < 0 || this.y > height) this.speedY *= -1;
+  }
+
+  Particle.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(255, 75, 92, 0.7)";
+    ctx.fill();
+  }
+
+  function initParticles() {
+    for(let i=0; i<particleCount; i++){
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,width,height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  initParticles();
+  animate();
+</script>
+
+</body>
+</html>
