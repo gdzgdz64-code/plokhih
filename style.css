@@ -1312,8 +1312,8 @@ body.no-scroll { overflow: hidden; }
 
 /* 🌟 Анимации появления */
 .fade-in {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
@@ -1354,22 +1354,67 @@ body.no-scroll { overflow: hidden; }
 .reviews-grid .fade-in:nth-child(3) { transition-delay: 0.6s; }
 /* 💬 Отзывы */
 /* Заголовок секции */
-#reviews h2.highlight {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  text-align: center;
-  background: none;
-  color: var(--primary);
-  font-weight: bold;
-  position: relative;
+#reviews,
+#partners,
+#contacts {
+  background: var(--bg);
+  color: var(--text);
 }
-#reviews h2.highlight::after {
+
+#reviews,
+#partners,
+#contacts {
+  color: #1a1a1a !important;
+}
+
+body.dark #reviews,
+body.dark #partners,
+body.dark #contacts {
+  color: #f5f5f5 !important;
+}
+
+#reviews h2.highlight,
+#partners h2.highlight,
+#contacts h2.highlight,
+#contacts .container h2.highlight,
+#partners .container h2.highlight {
+  font-size: 2.2rem;
+  margin-bottom: 35px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  position: relative;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  width: 100%;
+}
+
+#reviews h2.highlight::before,
+#partners h2.highlight::before,
+#contacts h2.highlight::before,
+#contacts .container h2.highlight::before,
+#partners .container h2.highlight::before {
+  content: "⚔";
+  display: block;
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+#reviews h2.highlight::after,
+#partners h2.highlight::after,
+#contacts h2.highlight::after,
+#contacts .container h2.highlight::after,
+#partners .container h2.highlight::after {
   content: "";
   display: block;
-  width: 60px;
-  height: 3px;
-  background: var(--primary);
-  margin: 10px auto 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  margin: 12px auto 0;
   border-radius: 2px;
 }
 
@@ -1388,6 +1433,7 @@ body.no-scroll { overflow: hidden; }
   background: var(--card);
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text);
 }
 .review:hover {
   transform: translateY(-5px);
@@ -1400,14 +1446,16 @@ body.no-scroll { overflow: hidden; }
   font-style: italic;
   position: relative;
   padding-left: 25px;
+  color: #1a1a1a !important;
 }
+
+body.dark .review p {
+  color: #f5f5f5 !important;
+}
+
 .review p::before {
-  content: "“";
-  position: absolute;
-  left: 0;
-  top: -5px;
-  font-size: 2rem;
-  color: var(--primary);
+  content: "";
+  display: none;
 }
 
 /* Автор */
@@ -1415,7 +1463,11 @@ body.no-scroll { overflow: hidden; }
   display: block;
   margin-top: 10px;
   font-size: 0.9rem;
-  color: #555;
+  color: #555 !important;
+}
+
+body.dark .review span {
+  color: #ccc !important;
 }
 
 /* Цветовые акценты */
@@ -1462,8 +1514,8 @@ body.dark .review:hover { box-shadow: 0 0 15px rgba(255,255,255,0.12); transform
   text-align: center; /* ← Центрирует весь текст */
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
   display: flex;
   flex-direction: column;
   align-items: center; /* ← Центрирует иконку */
@@ -1535,6 +1587,7 @@ body.dark .review:hover { box-shadow: 0 0 15px rgba(255,255,255,0.12); transform
     align-items: center;
     justify-content: center;
     height: 100px;
+    color: var(--text);
 }
 .partner-item img {
     max-height: 100px;
@@ -1669,8 +1722,8 @@ body.dark .review:hover { box-shadow: 0 0 15px rgba(255,255,255,0.12); transform
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: none;
     transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
     position: relative;
 }
@@ -1790,8 +1843,8 @@ body.dark .review:hover { box-shadow: 0 0 15px rgba(255,255,255,0.12); transform
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: none;
     transition: opacity 0.6s ease, transform 0.6s ease;
     position: relative;
 }
@@ -2031,6 +2084,7 @@ body.dark textarea {
   text-align: center;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text);
 }
 
 .benefit-item:hover {
@@ -2054,7 +2108,7 @@ body.dark textarea {
 
 /* Ссылки */
 .benefit-item a {
-  color: var(--link-color);
+  color: var(--primary) !important;
   text-decoration: underline;
 }
 
@@ -2062,19 +2116,69 @@ body.dark textarea {
   text-decoration: none;
 }
 
-/* Тёмная тема */
-body.dark .benefit-item {
-  background-color: #1e1e1e;
-  color: #eee;
+.benefit-item p {
+  color: #1a1a1a !important;
+  margin: 0;
+  line-height: 1.4;
 }
 
-body.dark .benefit-item a {
-  color: #90caf9;
+body.dark .benefit-item p {
+  color: #f5f5f5 !important;
 }
 
-body.dark .icon-circle {
-  background: var(--primary);
-  color: #fff;
+.benefit-item strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+    color: var(--primary) !important;
+}
+
+/* Текст в разделах */
+.about-text {
+  color: #1a1a1a !important;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 15px;
+}
+
+body.dark .about-text {
+  color: #f5f5f5 !important;
+}
+
+#reviews p,
+#contacts p,
+#partners p {
+  color: #1a1a1a !important;
+}
+
+body.dark #reviews p,
+body.dark #contacts p,
+body.dark #partners p {
+  color: #f5f5f5 !important;
+}
+
+#reviews span,
+#contacts span,
+#partners span {
+  color: #1a1a1a !important;
+}
+
+body.dark #reviews span,
+body.dark #contacts span,
+body.dark #partners span {
+  color: #f5f5f5 !important;
+}
+
+#reviews h3,
+#contacts h3,
+#partners h3 {
+  color: #1a1a1a !important;
+}
+
+body.dark #reviews h3,
+body.dark #contacts h3,
+body.dark #partners h3 {
+  color: #f5f5f5 !important;
 }
 
 /* Адаптив */
@@ -2205,8 +2309,8 @@ body.dark {
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   scroll-snap-align: start;
   transition: transform 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
 }
 
 .timeline-item.visible {
@@ -2267,8 +2371,8 @@ body.dark {
   padding: 25px 20px 20px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
   border-left: 4px solid var(--primary);
 }
 
@@ -2352,8 +2456,8 @@ body.dark #belts-system {
   text-align: center;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
 }
 
 .belt-item.visible {
