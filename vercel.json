@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/config.yml", "destination": "/admin/config.yml" },
-    { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/", "destination": "/admin/index.html" }
-  ],
-  "cleanUrls": true
-}
