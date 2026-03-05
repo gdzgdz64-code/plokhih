@@ -269,21 +269,24 @@ if (uModal) {
   ========================= */
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
-    const savedTheme = localStorage.getItem('theme');
-
-    if (savedTheme) {
-      document.body.classList.toggle('dark', savedTheme === 'dark');
-      themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌙';
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.classList.add('dark');
-      themeToggle.textContent = '🌞';
-    }
+    // Установка иконки на основе текущей темы
+    const isDark = document.body.classList.contains('dark');
+    themeToggle.textContent = isDark ? '🌞' : '🌙';
 
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      themeToggle.textContent = isDark ? '🌞' : '🌙';
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      const isDarkNow = document.body.classList.contains('dark');
+      themeToggle.textContent = isDarkNow ? '🌞' : '🌙';
+      localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+    });
+
+    // Двойной клик для сброса к автоматической теме
+    themeToggle.addEventListener('dblclick', () => {
+      localStorage.removeItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.body.classList.toggle('dark', prefersDark);
+      themeToggle.textContent = prefersDark ? '🌞' : '🌙';
+      alert('Тема сброшена к системным настройкам');
     });
   }
   /* =========================
@@ -372,4 +375,49 @@ overlay.addEventListener("click", () => {
     }
   }
 
+});
+
+// Редактирование контента
+document.addEventListener('DOMContentLoaded', () => {
+  const editModal = document.getElementById('edit-modal');
+  const editTextarea = document.getElementById('edit-textarea');
+  const saveEditBtn = document.getElementById('save-edit');
+  let currentSection = '';
+
+  // Админ-вход отключён: кнопка входа удалена, режим администратора не активируется
+
+  document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      currentSection = e.target.dataset.section;
+      const section = document.getElementById(currentSection);
+      const content = section.innerHTML;
+      editTextarea.value = content;
+      editModal.classList.add('show');
+      editModal.style.display = 'flex';
+      document.body.classList.add('no-scroll');
+    });
+  });
+
+  editModal.querySelector('.modal-close').addEventListener('click', () => {
+    editModal.classList.remove('show');
+    editModal.style.display = 'none';
+    document.body.classList.remove('no-scroll');
+  });
+
+  saveEditBtn.addEventListener('click', () => {
+    const newContent = editTextarea.value;
+    localStorage.setItem(currentSection + '_content', newContent);
+    document.getElementById(currentSection).innerHTML = newContent;
+    editModal.classList.remove('show');
+    editModal.style.display = 'none';
+    document.body.classList.remove('no-scroll');
+  });
+
+  // Загрузка сохранённого контента
+  ['trainers', 'achievements', 'club-achievements'].forEach(section => {
+    const saved = localStorage.getItem(section + '_content');
+    if (saved) {
+      document.getElementById(section).innerHTML = saved;
+    }
+  });
 });
