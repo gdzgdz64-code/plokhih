@@ -1,16 +1,736 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Admin</title>
-  </head>
-  <body>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
-    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
-    <script>
-      CMS.init({ configPath: "https://plokhih.vercel.app/admin/config.yml" });
-    </script>
-  </body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Клуб 'Плохиш' — Федерация каратэ WKC Курской области. Тренировки по каратэ для детей и взрослых в Курске. Победы, дисциплина и развитие характера.">
+  <meta name="keywords" content="каратэ, курск, федерация wkc, тренировки, дети, взрослые, боевое искусство, дисциплина, уважение">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://plokhih.vercel.app/">
+  <title>Клуб "Плохиш" — Федерация каратэ WKC Курской области</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Клуб Плохиш",
+    "url": "https://plokhih.vercel.app/",
+    "logo": "https://plokhih.vercel.app/media/iconka.ico",
+    "description": "Федерация каратэ WKC Курской области. Тренировки по каратэ для детей и взрослых.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Курск",
+      "addressRegion": "Курская область",
+      "addressCountry": "RU"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+7-951-311-94-11",
+      "contactType": "customer service"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="media/iconka.ico" type="image/png">
+<meta property="og:title" content='Клуб "Плохиш" — Федерация каратэ WKC Курской области'>
+<meta property="og:description" content="Тренировки по каратэ для детей и взрослых в Курске. Федерация WKC. Победы, дисциплина и развитие характера.">
+<meta property="og:image" content="media/iconka.ico">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://plokhih.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content='Клуб "Плохиш" — Федерация каратэ WKC Курской области'>
+<meta name="twitter:description" content="Официальный сайт Федерации каратэ WKC Курской области">
+<meta name="twitter:image" content="media/iconka.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.body.classList.toggle('dark', savedTheme === 'dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark');
+    }
+  })();
+</script>
+
+</head>
+<body>
+
+<audio id="trainer-sound" src="media/proverka-akustiki-5_1-test-shinco-5_1.mp3" preload="auto"></audio>
+
+<!-- Hero -->
+<header id="hero">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content glass">
+    <h1>Каратэ для детей и взрослых в Курске</h1>
+    <p>Сила, характер и уважение — тренировки для всех возрастов</p>
+    <div class="buttons">
+      <a href="https://vk.com/public186004438" class="btn red">Записаться на пробную тренировку</a>
+      <a href="tel:+79513119411" class="btn dark">Позвонить тренеру</a>
+    </div>
+  </div>
+</header>
+
+<!-- О клубе -->
+<section id="about" class="container fade-in">
+  <h2 class="highlight">О клубе</h2>
+  <p class="about-text">
+    Школа каратэ «Плохиш» — это не просто спортивная секция, это место, где рождаются чемпионы и формируются личности. 
+    Более <strong>15 лет</strong> мы верим в силу каратэ как инструмента воспитания дисциплины, уважения и духовного совершенствования.
+  </p>
+  
+  <p class="about-text">
+    Каратэ — это боевое искусство, которое развивает не только физическую силу, но и психологическую устойчивость. 
+    Наши ученики постигают принципы <strong>мудрости, мужества и самоконтроля</strong>, которые применяют в повседневной жизни. 
+    В нашем клубе каждый находит своё место вне зависимости от возраста и физической подготовки.
+  </p>
+  
+  <p class="about-text">
+    Наши тренеры — <strong>мастера спорта России, чемпионы и мировые призёры</strong>, прошли длительный путь подготовки 
+    и готовы поделиться своими знаниями. Мы гордимся атмосферой взаимопомощи и дружбы, которая царит в клубе. 
+    Единственный враг здесь — лень, а единственная награда — постоянный рост.
+  </p>
+
+  <p class="about-text">
+    <strong>Философия нашего клуба:</strong> Мы верим, что каратэ — это не просто способ защиты, это путь развития личности. 
+    Каждый ученик, независимо от возраста и пола, может достичь высоких результатов при наличии упорства и желания. 
+    Наш девиз: <em>«Мастерство рождается из повторения и уважения»</em>.
+  </p>
+
+  <div class="about-media">
+    <div class="media-item fade-in">
+      <h3 class="media-title">Наш зал</h3>
+      <img src="media/zal.jpg" alt="Зал клуба" loading="lazy">
+    </div>
+    <div class="media-item fade-in">
+      <h3 class="media-title">Видео‑приветствие от тренера</h3>
+      <video controls>
+        <source src="media/compressO-privet.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Программа обучения -->
+<section class="container fade-in">
+  <h2 class="highlight">Как проходят тренировки</h2>
+  
+  <div class="training-steps">
+    <div class="step-item fade-in">
+      <div class="step-number">1</div>
+      <h3>Разминка и подготовка</h3>
+      <p>Каждое занятие начинается с интенсивной разминки для разогрева мышц, суставов и подготовки организма. Это укрепляет сердечно-сосудистую систему и предотвращает травмы.</p>
+    </div>
+    
+    <div class="step-item fade-in">
+      <div class="step-number">2</div>
+      <h3>Изучение техники</h3>
+      <p>Под руководством опытного тренера вы изучаете базовые удары, блоки и стойки. Каждое движение имеет смысл и разучивается медленно, от простого к сложному.</p>
+    </div>
+    
+    <div class="step-item fade-in">
+      <div class="step-number">3</div>
+      <h3>Практические упражнения</h3>
+      <p>Отработка техники на мешках, лапах и с партнёром. Это развивает точность, скорость и мощь ударов в реальных условиях боевого применения.</p>
+    </div>
+    
+    <div class="step-item fade-in">
+      <div class="step-number">4</div>
+      <h3>Спортивные поединки</h3>
+      <p>На продвинутых уровнях — контролируемые поединки с партнёрами в защитном снаряжении. Это учит тактике и уверенности в себе.</p>
+    </div>
+    
+    <div class="step-item fade-in">
+      <div class="step-number">5</div>
+      <h3>Медитация и растяжка</h3>
+      <p>Занятие заканчивается медитацией и растяжкой. Это успокаивает ум и способствует быстрому восстановлению организма после нагрузок.</p>
+    </div>
+  </div>
+  
+  <p class="about-text" style="margin-top: 40px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+    Каждая тренировка длится <strong>60-120 минут</strong> в зависимости от уровня подготовки. 
+    Группы разделены по возрастам и мастерству, чтобы каждый мог тренироваться в максимально комфортном темпе и условиях.
+  </p>
+</section>
+
+<!-- Наши тренеры -->
+<section id="trainers" class="container fade-in">
+  <h2 class="highlight">Наши тренеры <button class="edit-btn btn" data-section="trainers">Редактировать</button></h2>
+  <div class="trainers-grid">
+
+    <div class="team-card card-item"
+         data-img="media/Dmitry.jpg"
+         data-name="Плохих Дмитрий Юрьевич"
+         data-role="Тренер-преподаватель"
+         data-info="2 дан (чёрный пояс), мастер спорта России. Стаж тренерской работы — 15 лет."
+         data-comment="Я верю, что каждый ученик способен достичь вершин, если будет упорно трудиться."
+         data-badges='[
+           {"type":"gold","count":12},
+           {"type":"title","label":"МС"}
+         ]'>
+      <img src="media/Dmitry.jpg" alt="Плохих Дмитрий Юрьевич">
+      <h3>Плохих Дмитрий Юрьевич</h3>
+      <p class="role">Тренер-преподаватель</p>
+    </div>
+
+    <div class="team-card card-item"
+         data-img="media/Alexandra.jpg"
+         data-name="Полина Александра Юрьевна"
+         data-role="Тренер-преподаватель"
+         data-info="Чемпион Мира, бронзовый призёр Европы. Стаж тренерской работы — 10 лет."
+         data-comment="Главное — получать удовольствие от тренировок и верить в себя."
+         data-badges='[
+           {"type":"gold","count":8},
+           {"type":"silver","count":5},
+           {"type":"title","label":"МСМК"}
+         ]'>
+      <img src="media/Alexandra.jpg" alt="Полина Александра Юрьевна">
+      <h3>Полина Александра Юрьевна</h3>
+      <p class="role">Тренер-преподаватель</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Что получают дети -->
+<section id="benefits" class="fade-in">
+  <div class="container fade-in">
+    <h2 class="highlight">Что получают дети в школе‑карате «Плохиш»</h2>
+    <div class="benefits-grid fade-in">
+      <div class="benefit-item">
+        <div class="icon-circle">🧘</div>
+        <p><strong>Психологическая устойчивость.</strong> Каратэ учит медитативности и контролю эмоций. Ребёнок становится спокойнее, увереннее и избавляется от тревожности.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="icon-circle">💪</div>
+        <p><strong>Физическое развитие.</strong> Тренировки укрепляют мышцы, улучшают координацию, развивают гибкость, выносливость и быстроту рефлексов.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="icon-circle">🎯</div>
+        <p><strong>Концентрация и внимание.</strong> Единоборство требует полной сосредоточенности. Это помогает и в учёбе, и в повседневных задачах.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="icon-circle">🏆</div>
+        <p><strong>Уверенность в себе.</strong> Система поясов и прогрессивного обучения позволяет видеть постоянный прогресс. Каждая победа над собой повышает самооценку.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="icon-circle">🤝</div>
+        <p><strong>Нравственные ценности.</strong> Ребёнок учится уважению к сопернику, помощи товарищам и честности. Кодекс чести каратэ становится жизненным принципом.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="icon-circle">🥋</div>
+        <p><strong>Дисциплина и самодисциплина.</strong> Каратэ учит ответственности перед тренером, командой и собой. Это формирует привычку к регулярным тренировкам и целеустремлённости.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Система поясов -->
+<section id="belts-system" class="container fade-in">
+  <h2 class="highlight">Система поясов в каратэ WKC</h2>
+  <p class="about-text">
+    Система кю в каратэ WKC — это путь постоянного совершенствования от 10-го кю до чёрного пояса. 
+    Каждый уровень символизирует не просто технику, но и духовный рост, дисциплину и преданность искусству каратэ. 
+    Полный путь от белого пояса до чёрного требует примерно <strong>9–10 лет регулярных тренировок</strong>.
+  </p>
+  
+  <div class="belts-grid fade-in">
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border: 2px solid #999;"></div>
+      <h3>10 кю — Белый пояс</h3>
+      <p><strong>Символ чистоты</strong><br>Срок: 3–4 месяца</p>
+      <p class="belt-quote">«В сознании новичка много возможностей, в сознании знатока — лишь несколько». — Сюнрю Судзуки</p>
+      <p>Начало пути. Ученик приходит как «чистый лист», готовый впитывать знания. Избавление от предвзятости и открытость — главные качества на этом уровне.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="position: relative; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);">
+        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 30px; height: 60px; background: #fff176; border-radius: 3px;"></div>
+      </div>
+      <h3>9 кю — Белый с жёлтой нашивкой</h3>
+      <p><strong>Переход к пробуждению</strong><br>Срок: 3–4 месяца</p>
+      <p>Первые проблески понимания. Ученик начинает чувствовать разницу между правильным и неправильным движением. Базовая техника становится привычной.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #fff176 0%, #fdd835 100%);"></div>
+      <h3>8 кю — Жёлтый пояс</h3>
+      <p><strong>Символ пробуждения</strong><br>Срок: 4–5 месяцев</p>
+      <p class="belt-quote">«Изучение боевых искусств подобно восхождению на гору: нужно упорство, чтобы увидеть горизонт». — Чой Хон Хи</p>
+      <p>Первый луч солнца. Ученик начинает понимать, что каратэ — это не только сила, но и путь развития собственной личности.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="position: relative; background: linear-gradient(135deg, #fff176 0%, #fdd835 100%);">
+        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 30px; height: 60px; background: #ff9800; border-radius: 3px;"></div>
+      </div>
+      <h3>7 кю — Жёлтый с оранжевой нашивкой</h3>
+      <p><strong>Переход к стабильности</strong><br>Срок: 4–5 месяцев</p>
+      <p>Техника начинает стабилизироваться. Первые комбинации ударов, первые серьёзные тренировки — ученик начинает ощущать собственный потенциал.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #ff9800 0%, #ff8800 100%);"></div>
+      <h3>6 кю — Оранжевый пояс</h3>
+      <p><strong>Символ стабильности</strong><br>Срок: 5–6 месяцев</p>
+      <p class="belt-quote">«Секрет успеха — в постоянстве цели». — Бенджамин Дизраэли</p>
+      <p>Цвет укрепляющейся веры. Техника становится приземлённой и стабильной. Тело привыкает к нагрузкам, появляется первая серьёзная выносливость.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="position: relative; background: linear-gradient(135deg, #ff9800 0%, #ff8800 100%);">
+        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 30px; height: 60px; background: #81c784; border-radius: 3px;"></div>
+      </div>
+      <h3>5 кю — Оранжевый с зелёной нашивкой</h3>
+      <p><strong>Переход к росту</strong><br>Срок: 5–6 месяцев</p>
+      <p>Переходный уровень. Ученик способен помогать уже менее продвинутым. Техника становится более осознанной и естественной.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);"></div>
+      <h3>4 кю — Зелёный пояс</h3>
+      <p><strong>Символ роста и расцвета</strong><br>Срок: 6–8 месяцев</p>
+      <p class="belt-quote">«Тот, кто победил себя, сильнее того, кто победил в битве тысячу человек». — Будда</p>
+      <p>Символ жизни и расцвета. Подобно дереву, боец пускает корни. Техника становится естественной, движения — осознанными. Ученик начинает чувствовать ритм поединка.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="position: relative; background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);">
+        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 30px; height: 60px; background: #014882; border-radius: 3px;"></div>
+      </div>
+      <h3>3 кю — Зелёный с синей нашивкой</h3>
+      <p><strong>Переход к спокойствию</strong><br>Срок: 6–8 месяцев</p>
+      <p>Переходный уровень к синему поясу. Ученик начинает развивать лидерские качества и помогает младшим. Начало понимания, что физическая сила — не главное.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #014882 0%, #104875 100%);"></div>
+      <h3>2 кю — Синий пояс</h3>
+      <p><strong>Символ текучести и глубины</strong><br>Срок: 8–10 месяцев</p>
+      <p class="belt-quote">«Опустоши свой разум. Будь бесформенным и мягким, как вода». — Брюс Ли</p>
+      <p>Цвет неба и морских глубин. Ученик учится контролировать эмоции, быть гибким и адаптироваться к любому противнику. Спокойствие и масштаб мышления.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #8d6e63 0%, #6d4c41 100%);"></div>
+      <h3>1 кю — Коричневый пояс</h3>
+      <p><strong>Символ зрелости и глубоких корней</strong><br>Срок: 12–18 месяцев</p>
+      <p class="belt-quote">«Тренируйтесь больше, чем спите. Идите по пути, не сворачивая, пока не достигнете цели». — Масутацу Ояма</p>
+      <p>Цвет земли и созревания. Это этап оттачивания мастерства до автоматизма. Техника отточена, разум готовится к переходу на новый уровень — мудрости чёрного пояса.</p>
+    </div>
+    
+    <div class="belt-item">
+      <div class="belt-color" style="background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);"></div>
+      <h3>🥋 Чёрный пояс (1 дан)</h3>
+      <p><strong>Символ мудрости</strong><br>Срок подготовки: 1.5–2 года</p>
+      <p class="belt-quote">«Чёрный пояс — это не конец пути, а всего лишь новое начание». — Мицуё Маэда</p>
+      <p>Символ профессионализма и мудрости. Это не финал, а новое начало истинного мастерства. Говорят, что мастер долго носит чёрный пояс, пока тот не протирается и снова не становится белым — возвращение к смирению новичка.</p>
+    </div>
+  </div>
+  
+  <p class="about-text" style="margin-top: 40px; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <strong>Важно помнить:</strong> каждый пояс — это не просто техническое достижение, это результат упорных тренировок, преодоления себя и постоянного развития. 
+    Философия каратэ учит, что путь важнее цели. После достижения чёрного пояса ученик может продолжать совершенствоваться, достигая высших данов (вплоть до 10-го дана).
+  </p>
+</section>
+
+<!-- Достижения спортсменов -->
+<section id="achievements" class="container fade-in">
+  <h2 class="highlight">Достижения спортсменов <button class="edit-btn btn" data-section="achievements">Редактировать</button></h2>
+  <div class="achievements-grid">
+
+    <div class="achievement-card card-item"
+         data-img="media/Chausov.jpg"
+         data-name="Чаусов Евгений Сергеевич"
+         data-info="Мастер спорта России. Победитель Кубка России 2023..."
+         data-comment="Самое важное — верить в себя и никогда не сдаваться."
+         data-badges='[
+           {"type":"gold","count":6},
+           {"type":"silver","count":4},
+           {"type":"bronze","count":3},
+           {"type":"title","label":"МС"}
+         ]'>
+      <img src="media/Chausov.jpg" alt="Чаусов Евгений Сергеевич">
+      <h3>Чаусов Евгений Сергеевич</h3>
+    </div>
+
+    <div class="achievement-card card-item"
+         data-img="media/Chausov.jpg"
+         data-name="Мария Иванова"
+         data-info="Чемпионка России 2024..."
+         data-comment="Путь к победе начинается с первого шага на татами."
+         data-badges='[
+           {"type":"gold","count":88},
+           {"type":"silver","count":84},
+           {"type":"bronze","count":38},
+           {"type":"title","label":"3 разряд"}
+         ]'>
+      <img src="media/Chausov.jpg" alt="Мария Иванова">
+      <h3>Мария Иванова</h3>
+    </div>
+
+     <div class="achievement-card card-item"
+         data-img="media/Chausov.jpg"
+         data-name="Мария Иванова"
+         data-info="Чемпионка России 2024..."
+         data-comment="Путь к победе начинается с первого шага на татами."
+         data-badges='[
+           {"type":"gold","count":88},
+           {"type":"silver","count":84},
+           {"type":"bronze","count":38},
+           {"type":"title","label":"3 разряд"}
+         ]'>
+      <img src="media/Chausov.jpg" alt="Мария Иванова">
+      <h3>Мария Иванова</h3>
+    </div>
+ <div class="achievement-card card-item"
+         data-img="media/Chausov.jpg"
+         data-name="Мария Иванова"
+         data-info="Чемпионка России 2024..."
+         data-comment="Путь к победе начинается с первого шага на татами."
+         data-badges='[
+           {"type":"gold","count":88},
+           {"type":"silver","count":84},
+           {"type":"bronze","count":38},
+           {"type":"title","label":"3 разряд"}
+         ]'>
+      <img src="media/Chausov.jpg" alt="Мария Иванова">
+      <h3>Мария Иванова</h3>
+    </div>
+
+  </div>
+</section>
+
+<!-- Достижения клуба -->
+<section id="club-achievements" class="fade-in">
+  <div class="container">
+    <h2 class="highlight">Достижения клуба <button class="edit-btn btn" data-section="club-achievements">Редактировать</button></h2>
+
+    <!-- Медали -->
+    <div class="benefits-group fade-in">
+      <h3>Медали</h3>
+      <div class="benefits-grid achievements-grid">
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, gold, #ffecb3);">🥇</div>
+          <strong>Золотые</strong>
+          <p>6</p>
+        </div>
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, silver, #e0e0e0);">🥈</div>
+          <strong>Серебряные</strong>
+          <p>42</p>
+        </div>
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #cd7f32, #ffcc80);">🥉</div>
+          <strong>Бронзовые</strong>
+          <p>32</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Звания -->
+    <div class="benefits-group fade-in">
+      <h3>Звания</h3>
+      <div class="benefits-grid achievements-grid">
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #2196f3, #90caf9);">🏅</div>
+          <strong>Заслуженный мастер спорта России</strong>
+          <p>12</p>
+        </div>
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #4caf50, #81c784);">🏅</div>
+          <strong>Мастер спорта международного класса</strong>
+          <p>5</p>
+        </div>
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #9c27b0, #ce93d8);">🏅</div>
+          <strong>Мастер спорта России</strong>
+          <p>2</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Даны -->
+    <div class="benefits-group fade-in">
+      <h3>Даны</h3>
+      <div class="benefits-grid achievements-grid">
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #607d8b, #b0bec5);">🥋</div>
+          <strong>Чёрных поясов</strong>
+          <p>4</p>
+        </div>
+        <div class="benefit-item">
+          <div class="icon-circle" style="background: linear-gradient(45deg, #ff9800, #ffcc80);">🥋</div>
+          <strong>Высших дан</strong>
+          <p>5</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="container fade-in">
+  <h2 class="highlight">Хронология клуба</h2>
+  <div class="timeline-horizontal">
+
+    <div class="timeline-item"
+         data-img="media/Chausov1.jpg"
+         data-title="Основание клуба"
+         data-text="Клуб «Плохиш» открыл свои двери для первых учеников в Курске.">
+      <img src="media/Chausov1.jpg" alt="Основание клуба">
+      <div class="timeline-date">2010</div>
+      <h3>Основание клуба</h3>
+      <p>Клуб «Плохиш» открыл свои двери для первых учеников в Курске.</p>
+    </div>
+
+    <div class="timeline-item"
+         data-img="media/Chausov1.jpg"
+         data-title="Первый турнир"
+         data-text="Участие в региональных соревнованиях и первые медали.">
+      <img src="media/Chausov1.jpg" alt="Первый турнир">
+      <div class="timeline-date">2013</div>
+      <h3>Первый турнир</h3>
+      <p>Участие в региональных соревнованиях и первые медали.</p>
+    </div>
+
+    <div class="timeline-item"
+         data-img="media/Chausov1.jpg"
+         data-title="Собственный зал"
+         data-text="Открытие тренировочной базы с татами и раздевалками.">
+      <img src="media/Chausov1.jpg" alt="Собственный зал">
+      <div class="timeline-date">2017</div>
+      <h3>Собственный зал</h3>
+      <p>Открытие тренировочной базы с татами и раздевалками.</p>
+    </div>
+
+    <div class="timeline-item"
+         data-img="media/Chausov1.jpg"
+         data-title="Международный успех"
+         data-text="Спортсмены клуба заняли призовые места на турнирах WKC.">
+      <img src="media/Chausov1.jpg" alt="Международный успех">
+      <div class="timeline-date">2020</div>
+      <h3>Международный успех</h3>
+      <p>Спортсмены клуба заняли призовые места на турнирах WKC.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Фотоальбомы -->
+<section id="albums" class="container fade-in">
+  <h2 class="highlight">Фотоальбомы</h2>
+  <div class="albums-grid fade-in">
+    <div class="album-item fade-in">
+      <a href="https://vk.com/album-123456_987654321" target="_blank">
+        <img src="media/preview1.jpg" alt="Семинар">
+        <h3>Семинар</h3>
+      </a>
+    </div>
+    <div class="album-item fade-in">
+      <a href="https://vk.com/album-123456_987654322" target="_blank">
+        <img src="media/preview2.jpg" alt="Соревнования">
+        <h3>Соревнования</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Отзывы -->
+<section id="reviews" class="container fade-in">
+  <h2 class="highlight">Отзывы</h2>
+  <div class="reviews-grid fade-in">
+    <div class="review positive ">
+      <p>Отличный клуб! Дети в восторге, тренеры внимательные и профессиональные.</p>
+      <span>— Мария К.</span>
+    </div>
+    <div class="review positive ">
+      <p>Очень уютная атмосфера, сын с радостью ходит на тренировки!</p>
+      <span>— Алексей П.</span>
+    </div>
+    <div class="review negative">
+      <p>А таких пока нет</p>
+      <span>—</span>
+    </div>
+  </div>
+</section>
+
+<!-- Контакты -->
+<section id="contacts" class="fade-in">
+  <div class="container">
+    <h2 class="highlight">Контакты и где нас найти</h2>
+    
+    <p class="about-text" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+      Присоединяйтесь к нашей команде каратистов! Мы открыты для новичков всех возрастов. 
+      Первая пробная тренировка абсолютно бесплатна. Позвоните нам или напишите в группу в ВКонтакте, 
+      и наши тренеры подберут для вас оптимальное время занятий.
+    </p>
+    
+    <div class="contacts-grid">
+      
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">📞</div>
+        <p>
+          <strong>Главный номер</strong><br>
+          <a href="tel:+79513119411">+7 (951) 311-94-11</a><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Тренер Дмитрий Юрьевич</span>
+        </p>
+      </div>
+
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">💬</div>
+        <p>
+          <strong>ВКонтакте</strong><br>
+          <a href="https://vk.com/public186004438" target="_blank" rel="noopener noreferrer">
+            Перейти в группу
+          </a><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Расписание и новости</span>
+        </p>
+      </div>
+
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">📧</div>
+        <p>
+          <strong>Email</strong><br>
+          <a href="mailto:example@mail.ru">example@mail.ru</a><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Для вопросов и предложений</span>
+        </p>
+      </div>
+
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">📍</div>
+        <p>
+          <strong>Филиал 1: ул. 50 лет Октября</strong><br>
+          <a href="https://yandex.ru/maps/?text=Курск, ул. 50 лет Октября, 141" target="_blank" rel="noopener noreferrer">
+            ул. 50 лет Октября, 141
+          </a><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Тренировки: пн, ср, пт 17:00-20:00</span>
+        </p>
+      </div>
+
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">📍</div>
+        <p>
+          <strong>Филиал 2: ТЦ Пушкинский</strong><br>
+          <a href="https://yandex.ru/maps/?text=Курск, ул. Ленина, 30, ТЦ Пушкинский, 4 этаж" target="_blank" rel="noopener noreferrer">
+            ул. Ленина, 30 — 4 этаж
+          </a><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Тренировки: вт, чт, сб 16:00-19:00</span>
+        </p>
+      </div>
+
+      <div class="benefit-item fade-in">
+        <div class="icon-circle">🥋</div>
+        <p>
+          <strong>Первая тренировка</strong><br>
+          <strong style="color: var(--primary);">БЕСПЛАТНО</strong><br>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">Приходите в спортивной одежде</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Партнёры -->
+<section id="partners" class="fade-in">
+  <div class="container">
+    <h2 class="highlight">Наши партнёры</h2>
+    <div class="partners-grid">
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 1">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 2">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 3">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 4">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 5">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 5">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 5">
+      </div>
+      <div class="partner-item fade-in">
+        <img src="media/490d38e33c65dfe7f1df16c83a446e45.png" alt="Партнёр 5">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Подвал -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>© 2025 Клуб «Плохиш» — Федерация каратэ WKC Курской области</p>
+    <nav class="footer-nav">
+      <a href="#about">О клубе</a>
+      <a href="#trainers">Тренеры</a>
+      <a href="#achievements">Достижения</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
+</footer>
+
+
+<!-- Переключатель темы -->
+
+<div id="universal-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Закрыть окно"><span>&times;</span></button>
+    <img id="u-modal-img" src="" alt="">
+    <h3 id="u-modal-name"></h3>
+    <p id="u-modal-role"></p>
+    <p id="u-modal-info"></p>
+    <div id="u-modal-badges"></div>
+    <blockquote id="u-modal-comment"></blockquote>
+  </div>
+</div>
+
+<div id="timeline-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Закрыть окно"><span>&times;</span></button>
+    <img id="timeline-modal-img" src="" alt="">
+    <h3 id="timeline-modal-title"></h3>
+    <p id="timeline-modal-text"></p>
+  </div>
+</div>
+
+<!-- Модалка редактирования -->
+<div id="edit-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Закрыть окно"><span>&times;</span></button>
+    <h3>Редактировать раздел</h3>
+    <textarea id="edit-textarea" rows="10" placeholder="Введите новый текст..."></textarea>
+    <button id="save-edit" class="btn">Сохранить</button>
+  </div>
+</div>
+
+<button id="theme-toggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
+
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="script.js" defer></script>
+<script src="main.js" defer></script>
+
+<!-- Vercel Analytics -->
+<script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
+
+</body>
 </html>
+
