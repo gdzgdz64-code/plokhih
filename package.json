@@ -1,0 +1,8 @@
+{
+  "name": "plokhih",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "netlify-cms-oauth-provider-node": "^2.0.0"
+  }
+}
