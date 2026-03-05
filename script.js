@@ -375,6 +375,48 @@ overlay.addEventListener("click", () => {
     }
   }
 
+  // Load club achievements from JSON (medals, titles, dans)
+  function renderBenefitItems(container, items) {
+    if (!container || !Array.isArray(items)) return;
+    container.innerHTML = "";
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "benefit-item";
+
+      const icon = document.createElement("div");
+      icon.className = "icon-circle";
+      if (item.gradient) icon.style.background = item.gradient;
+      icon.textContent = item.icon || "";
+
+      const label = document.createElement("strong");
+      label.textContent = item.label || "";
+
+      const count = document.createElement("p");
+      count.textContent = item.count != null ? String(item.count) : "";
+
+      card.appendChild(icon);
+      card.appendChild(label);
+      card.appendChild(count);
+      container.appendChild(card);
+    });
+  }
+
+  const clubSection = document.getElementById("club-achievements");
+  if (clubSection) {
+    const grids = clubSection.querySelectorAll(".benefits-grid.achievements-grid");
+    if (grids.length >= 3) {
+      fetch("/data/club-achievements.json")
+        .then(res => (res.ok ? res.json() : null))
+        .then(data => {
+          if (!data) return;
+          renderBenefitItems(grids[0], data.medals);
+          renderBenefitItems(grids[1], data.titles);
+          renderBenefitItems(grids[2], data.dans);
+        })
+        .catch(() => {});
+    }
+  }
+
 });
 
 // Редактирование контента

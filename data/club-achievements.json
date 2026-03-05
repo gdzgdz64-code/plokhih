@@ -1,0 +1,56 @@
+﻿{
+  "medals": [
+    {
+      "label": "Золотые",
+      "count": 6,
+      "icon": "🥇",
+      "gradient": "linear-gradient(45deg, gold, #ffecb3)"
+    },
+    {
+      "label": "Серебряные",
+      "count": 42,
+      "icon": "🥈",
+      "gradient": "linear-gradient(45deg, silver, #e0e0e0)"
+    },
+    {
+      "label": "Бронзовые",
+      "count": 32,
+      "icon": "🥉",
+      "gradient": "linear-gradient(45deg, #cd7f32, #ffcc80)"
+    }
+  ],
+  "titles": [
+    {
+      "label": "Заслуженный мастер спорта России",
+      "count": 12,
+      "icon": "🏅",
+      "gradient": "linear-gradient(45deg, #2196f3, #90caf9)"
+    },
+    {
+      "label": "Мастер спорта международного класса",
+      "count": 5,
+      "icon": "🏅",
+      "gradient": "linear-gradient(45deg, #4caf50, #81c784)"
+    },
+    {
+      "label": "Мастер спорта России",
+      "count": 2,
+      "icon": "🏅",
+      "gradient": "linear-gradient(45deg, #9c27b0, #ce93d8)"
+    }
+  ],
+  "dans": [
+    {
+      "label": "Чёрных поясов",
+      "count": 4,
+      "icon": "🥋",
+      "gradient": "linear-gradient(45deg, #607d8b, #b0bec5)"
+    },
+    {
+      "label": "Высших дан",
+      "count": 5,
+      "icon": "🥋",
+      "gradient": "linear-gradient(45deg, #ff9800, #ffcc80)"
+    }
+  ]
+}
