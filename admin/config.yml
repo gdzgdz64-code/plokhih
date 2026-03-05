@@ -1,0 +1,31 @@
+﻿backend:
+  name: github
+  repo: gdzgdz64-code/plokhih
+  branch: main
+  auth_type: implicit
+  app_id: Ov23liC24hcr7VYI9shb
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "site"
+    label: "Настройки сайта"
+    files:
+      - name: "home"
+        label: "Главная"
+        file: "data/home.json"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Описание", name: "description", widget: "text" }
+
+  - name: "events"
+    label: "События"
+    folder: "data/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Дата", name: "date", widget: "datetime" }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Картинка", name: "image", widget: "image" }
