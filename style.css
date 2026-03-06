@@ -1,4 +1,4 @@
-html {
+﻿html {
   scroll-behavior: smooth;
   background: #000;
 }
@@ -921,7 +921,7 @@ body:not(.dark) .achievement-card .role {
   padding: 4px;
   border-radius: 0;
   transition: transform 0.5s ease;
-   transform: scale(1.7)
+  transform: scale(1.70);
 }
 
 body.dark .card-img-wrapper img {
@@ -929,7 +929,7 @@ body.dark .card-img-wrapper img {
 }
 
 .team-card:hover .card-img-wrapper img {
-  transform: scale(1.73);
+  transform: scale(1.72);
 }
 
 .card-content {
@@ -1212,20 +1212,23 @@ html, body {
   }
 
   .card-img-wrapper {
-    /* Устанавливаем фиксированную высоту для мобильных, 
-       чтобы фото было крупным и пропорциональным */
-    height: 450px; 
+    height: auto;
     width: 100%;
+    aspect-ratio: 4 / 5;
     background: var(--photo-bg);
   }
 
   .card-img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top center; /* Лица всегда в кадре */
-    padding: 0; /* Убираем лишние отступы, если они мешают */
+    object-fit: contain;
+    object-position: top center;
+    padding: 0;
   }
+
+  /* На телефоне не увеличиваем, чтобы не обрезались лица */
+  .card-img-wrapper img { transform: none; }
+  .team-card:hover .card-img-wrapper img { transform: none; }
 
   /* 4. МОДАЛЬНОЕ ОКНО */
   #universal-modal .modal-content {
@@ -1251,9 +1254,7 @@ html, body {
     font-size: 1.7rem;
   }
 
-  .card-img-wrapper {
-    height: 380px; /* Уменьшаем высоту фото пропорционально экрану */
-  }
+  .card-img-wrapper { aspect-ratio: 4 / 5; }
 }
 /* Для очень маленьких телефонов (до 380px) */
 @media (max-width: 380px) {
@@ -1290,15 +1291,12 @@ html, body {
   }
 
   /* 2. Исправляем обрезку фото тренеров */
-  .card-img-wrapper {
-    height: auto;
-    aspect-ratio: 1 / 1;
-  }
+  .card-img-wrapper { aspect-ratio: 4 / 5; }
   .card-img-wrapper img {
-    width: 70%;
-    height: 70%;
-    object-fit: cover;
-    object-position: top;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
   }
   .card-content { padding: 16px; }
 

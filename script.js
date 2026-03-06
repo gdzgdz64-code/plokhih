@@ -1,6 +1,24 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
   const qs = (selector, root = document) => root.querySelector(selector);
   const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  let scrollLockY = 0;
+  let prevScrollBehavior = "";
+  const lockScroll = () => {
+    scrollLockY = window.scrollY || window.pageYOffset || 0;
+    prevScrollBehavior = document.documentElement.style.scrollBehavior || "";
+    document.body.style.top = `-${scrollLockY}px`;
+    document.body.classList.add("no-scroll");
+  };
+  const unlockScroll = () => {
+    document.body.classList.remove("no-scroll");
+    document.body.style.top = "";
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, scrollLockY);
+    // restore previous scroll behavior after position is set
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = prevScrollBehavior;
+    });
+  };
 
   /* =========================
      Универсальная функция появления элементов
@@ -38,12 +56,12 @@
 
       timelineModal.classList.add("show");
       timelineModal.style.display = "flex";
-      document.body.classList.add("no-scroll");
+      lockScroll();
     };
 
     const closeTimelineModal = () => {
       timelineModal.classList.remove("show");
-      document.body.classList.remove("no-scroll");
+      unlockScroll();
       setTimeout(() => { timelineModal.style.display = "none"; }, 300);
     };
 
@@ -144,7 +162,7 @@
     const uModalInfo = qs("#u-modal-info");
     const uModalComment = qs("#u-modal-comment");
     const uModalClose = qs(".modal-close", uModal);
-    const uModalBadges = qs("#u-modal-badges");
+  const uModalBadges = qs("#u-modal-badges");
 
     const titleDescriptions = {
       "ЗМС": "Заслуженный мастер спорта России (ЗМС) — высшее спортивное звание в РФ. Присваивается за выдающиеся достижения на международной арене.",
@@ -211,9 +229,9 @@
       }
       uModalBadges.style.display = uModalBadges.children.length ? "flex" : "none";
 
-      uModal.classList.add("show");
-      uModal.style.display = "flex";
-      document.body.classList.add("no-scroll");
+    uModal.classList.add("show");
+    uModal.style.display = "flex";
+    lockScroll();
 
       if (trainerSound) {
         trainerSound.volume = 0.4;
@@ -223,8 +241,8 @@
     };
 
     const closeUModal = () => {
-      uModal.classList.remove("show");
-      document.body.classList.remove("no-scroll");
+    uModal.classList.remove("show");
+    unlockScroll();
       setTimeout(() => { uModal.style.display = "none"; }, 300);
 
       if (trainerSound) {
@@ -296,13 +314,13 @@
       img.addEventListener("click", () => {
         modalImg.src = img.src;
         photoModal.classList.add("show");
-        document.body.classList.add("no-scroll");
+        lockScroll();
       });
     });
 
     overlay.addEventListener("click", () => {
       photoModal.classList.remove("show");
-      document.body.classList.remove("no-scroll");
+      unlockScroll();
     });
   }
 
@@ -384,13 +402,13 @@
     editTextarea.value = section.innerHTML;
     editModal.classList.add("show");
     editModal.style.display = "flex";
-    document.body.classList.add("no-scroll");
+    lockScroll();
   };
 
   const closeEditModal = () => {
     editModal.classList.remove("show");
     editModal.style.display = "none";
-    document.body.classList.remove("no-scroll");
+    unlockScroll();
   };
 
   if (editModal && editTextarea && saveEditBtn && editButtons.length) {
