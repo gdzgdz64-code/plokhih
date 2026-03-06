@@ -1318,6 +1318,51 @@ html, body {
   }
 }
 
+/* ===== Мобильный свайп: пояса и спортсмены ===== */
+@media (max-width: 768px) {
+  .belts-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+  .belt-item {
+    min-width: 260px;
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-top: -6px;
+    margin-left: 6px;
+  }
+
+  .achievements-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+  .achievement-card {
+    min-width: 260px;
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-top: -6px;
+    margin-left: 6px;
+  }
+
+  .belts-grid::-webkit-scrollbar,
+  .achievements-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  .belts-grid::-webkit-scrollbar-thumb,
+  .achievements-grid::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+  }
+}
+
 @media (max-width: 600px) {
   body { font-size: 14px; }
   .container { padding: 12px; }
