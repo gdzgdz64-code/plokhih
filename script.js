@@ -1,20 +1,12 @@
-window.addEventListener("load", () => {
-  /* =========================
-     музыка
-  ========================= */
-
-document.addEventListener('click', (e) => {
-  if (e.target.closest('.team-card, .achievement-card')) {
-    const audio = document.getElementById('trainer-sound');
-    audio.play().catch(err => console.log('Не удалось воспроизвести:', err));
-  }
-});
+﻿document.addEventListener("DOMContentLoaded", () => {
+  const qs = (selector, root = document) => root.querySelector(selector);
+  const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
   /* =========================
-     🌟 Универсальная функция появления элементов
+     Универсальная функция появления элементов
   ========================= */
   function observeElements(selector, visibleClass = "visible", threshold = 0.2, once = true) {
-    const elements = document.querySelectorAll(selector);
+    const elements = qsa(selector);
     if (!elements.length) return;
 
     const observer = new IntersectionObserver(entries => {
@@ -28,300 +20,251 @@ document.addEventListener('click', (e) => {
 
     elements.forEach(el => observer.observe(el));
   }
-  const timelineModal = document.getElementById("timeline-modal");
 
-if (timelineModal) {
-  const modalImg = document.getElementById("timeline-modal-img");
-  const modalTitle = document.getElementById("timeline-modal-title");
-  const modalText = document.getElementById("timeline-modal-text");
-  const modalClose = timelineModal.querySelector(".modal-close");
+  /* =========================
+     Модалка таймлайна
+  ========================= */
+  const timelineModal = qs("#timeline-modal");
+  if (timelineModal) {
+    const modalImg = qs("#timeline-modal-img");
+    const modalTitle = qs("#timeline-modal-title");
+    const modalText = qs("#timeline-modal-text");
+    const modalClose = qs(".modal-close", timelineModal);
 
-  function openTimelineModal(card) {
-    modalImg.src = card.dataset.img || "";
-    modalTitle.textContent = card.dataset.title || "";
-    modalText.textContent = card.dataset.text || "";
+    const openTimelineModal = card => {
+      modalImg.src = card.dataset.img || "";
+      modalTitle.textContent = card.dataset.title || "";
+      modalText.textContent = card.dataset.text || "";
 
-    timelineModal.classList.add("show");
-    timelineModal.style.display = "flex";
-    document.body.classList.add("no-scroll");
+      timelineModal.classList.add("show");
+      timelineModal.style.display = "flex";
+      document.body.classList.add("no-scroll");
+    };
+
+    const closeTimelineModal = () => {
+      timelineModal.classList.remove("show");
+      document.body.classList.remove("no-scroll");
+      setTimeout(() => { timelineModal.style.display = "none"; }, 300);
+    };
+
+    qsa(".timeline-item").forEach(item => {
+      item.addEventListener("click", () => openTimelineModal(item));
+    });
+
+    if (modalClose) modalClose.addEventListener("click", closeTimelineModal);
+    timelineModal.addEventListener("click", e => {
+      if (e.target === timelineModal) closeTimelineModal();
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeTimelineModal();
+    });
   }
 
-  function closeTimelineModal() {
-    timelineModal.classList.remove("show");
-    document.body.classList.remove("no-scroll");
-    setTimeout(() => timelineModal.style.display = "none", 300);
-  }
-
-  document.querySelectorAll(".timeline-item").forEach(item => {
-    item.addEventListener("click", () => openTimelineModal(item));
-  });
-
-  modalClose.addEventListener("click", closeTimelineModal);
-  timelineModal.addEventListener("click", e => {
-    if (e.target === timelineModal) closeTimelineModal();
-  });
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeTimelineModal();
-  });
-}
-
-
-  // 🔥 Плавная анимация при скролле
-  observeElements(".fade-in");
-  observeElements(".benefit-item");
-  observeElements(".stat-item");
-  observeElements(".partner-item");
-  observeElements(".review");
-  observeElements(".timeline-item");
-  observeElements(".belt-item");
-  observeElements(".step-item");
+  /* =========================
+     Плавная анимация при скролле
+  ========================= */
+  [
+    ".fade-in",
+    ".benefit-item",
+    ".stat-item",
+    ".partner-item",
+    ".review",
+    ".timeline-item",
+    ".belt-item",
+    ".step-item"
+  ].forEach(selector => observeElements(selector));
 
   /* =========================
      Параллакс hero (только десктоп)
   ========================= */
-const hero = document.getElementById("hero");
-
-function initParallax() {
-  if (window.innerWidth > 900 && hero) {
+  const hero = qs("#hero");
+  if (hero && window.innerWidth > 900) {
     let lastScrollY = 0;
-    function updateParallax() {
+    let ticking = false;
+
+    const updateParallax = () => {
       hero.style.backgroundPosition = `center ${lastScrollY * 0.4}px`;
-    }
+      ticking = false;
+    };
+
     window.addEventListener("scroll", () => {
       lastScrollY = window.pageYOffset;
-      requestAnimationFrame(updateParallax);
-    });
-  }
-}
-window.addEventListener("load", initParallax);
-
-  /* =========================
-     📊 Анимация счётчиков
-  ========================= */
-  function animateCounters(section) {
-    section.querySelectorAll(".counter").forEach(counter => {
-      if (counter.dataset.animated) return;
-      counter.dataset.animated = true;
-
-      const target = +counter.dataset.target;
-      const duration = 1000;
-      const startTime = performance.now();
-
-      function updateCounter(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        counter.textContent = Math.floor(progress * target);
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
-          counter.textContent = target;
-        }
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateParallax);
       }
-
-      requestAnimationFrame(updateCounter);
-    });
+    }, { passive: true });
   }
-
-  ["#club-achievements", ".medals-counter"].forEach(selector => {
-    const section = document.querySelector(selector);
-    if (section) {
-      new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) animateCounters(section);
-      }, { threshold: 0.4 }).observe(section);
-    }
-  });
 
   /* =========================
      Слайдеры Swiper
   ========================= */
-  const swiperConfig = {
-    loop: true,
-    pagination: { clickable: true },
-    slidesPerView: 1,
-    spaceBetween: 20,
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    },
-    autoplay: { delay: 5000, disableOnInteraction: false }
-  };
+  if (window.Swiper) {
+    const baseSwiperConfig = {
+      loop: true,
+      pagination: { clickable: true },
+      slidesPerView: 1,
+      spaceBetween: 20,
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      },
+      autoplay: { delay: 5000, disableOnInteraction: false }
+    };
 
-  [
-    '.trainers-swiper',
-    '.achievements-swiper',
-    '.albums-swiper',
-    '.reviews-swiper'
-  ].forEach(selector => {
-    const el = document.querySelector(selector);
-    if (el) {
-      swiperConfig.pagination.el = `${selector} .swiper-pagination`;
-      new Swiper(selector, swiperConfig);
-    }
-  });
+    [
+      ".trainers-swiper",
+      ".achievements-swiper",
+      ".albums-swiper",
+      ".reviews-swiper"
+    ].forEach(selector => {
+      const el = qs(selector);
+      if (!el) return;
+
+      new Swiper(el, {
+        ...baseSwiperConfig,
+        pagination: {
+          ...baseSwiperConfig.pagination,
+          el: `${selector} .swiper-pagination`
+        }
+      });
+    });
+  }
+
   /* =========================
      Модалка для тренеров и спортсменов
   ========================= */
-const uModal = document.getElementById("universal-modal");
-const trainerSound = document.getElementById("trainer-sound");
+  const uModal = qs("#universal-modal");
+  const trainerSound = qs("#trainer-sound");
 
-if (uModal) {
-  const uModalImg = document.getElementById("u-modal-img");
-  const uModalName = document.getElementById("u-modal-name");
-  const uModalRole = document.getElementById("u-modal-role");
-  const uModalInfo = document.getElementById("u-modal-info");
-  const uModalComment = document.getElementById("u-modal-comment");
-  const uModalClose = uModal.querySelector(".modal-close");
-  const uModalBadges = document.getElementById("u-modal-badges");
- const titleDescriptions = {
-  "ЗМС": "Заслуженный мастер спорта России (ЗМС) — высшее спортивное звание в РФ. Присваивается за выдающиеся достижения на международной арене.",
-  "МСМК": "Мастер спорта России международного класса (МСМК) — одно из высших званий. Присваивается за успешные выступления на чемпионатах мира, Европы и других крупных международных турнирах.",
-  "МС": "Мастер спорта России (МС) — федеральное спортивное звание первой категории. Присваивается за выполнение высоких нормативов на чемпионатах России и других официальных соревнованиях.",
-  "КМС": "Кандидат в мастера спорта России (КМС) — промежуточное звание перед МС. Требует серьёзных спортивных результатов на региональном и всероссийском уровне.",
-  "1 разряд": "Первый спортивный разряд — высокий уровень спортивной квалификации, предшествующий званию КМС.",
-  "2 разряд": "Второй спортивный разряд — средний уровень спортивной подготовки.",
-  "3 разряд": "Третий спортивный разряд — начальный уровень спортивной квалификации для взрослых спортсменов.",
-  "1 юношеский разряд": "Первый юношеский разряд — высший уровень среди юношеских категорий.",
-  "2 юношеский разряд": "Второй юношеский разряд — средний уровень подготовки для детей и подростков.",
-  "3 юношеский разряд": "Третий юношеский разряд — начальный уровень спортивной квалификации для юных спортсменов."
-};
+  if (uModal) {
+    const uModalImg = qs("#u-modal-img");
+    const uModalName = qs("#u-modal-name");
+    const uModalRole = qs("#u-modal-role");
+    const uModalInfo = qs("#u-modal-info");
+    const uModalComment = qs("#u-modal-comment");
+    const uModalClose = qs(".modal-close", uModal);
+    const uModalBadges = qs("#u-modal-badges");
 
- function openUModal(card) {
-  uModalImg.src = card.dataset.img || "";
-  uModalName.textContent = card.dataset.name || "";
-  uModalRole.textContent = card.dataset.role || "";
-  uModalInfo.textContent = card.dataset.info || "";
-  uModalComment.textContent = card.dataset.comment || "";
+    const titleDescriptions = {
+      "ЗМС": "Заслуженный мастер спорта России (ЗМС) — высшее спортивное звание в РФ. Присваивается за выдающиеся достижения на международной арене.",
+      "МСМК": "Мастер спорта России международного класса (МСМК) — одно из высших званий. Присваивается за успешные выступления на чемпионатах мира, Европы и других крупных международных турнирах.",
+      "МС": "Мастер спорта России (МС) — федеральное спортивное звание первой категории. Присваивается за выполнение высоких нормативов на чемпионатах России и других официальных соревнованиях.",
+      "КМС": "Кандидат в мастера спорта России (КМС) — промежуточное звание перед МС. Требует серьёзных спортивных результатов на региональном и всероссийском уровне.",
+      "1 разряд": "Первый спортивный разряд — высокий уровень спортивной квалификации, предшествующий званию КМС.",
+      "2 разряд": "Второй спортивный разряд — средний уровень спортивной подготовки.",
+      "3 разряд": "Третий спортивный разряд — начальный уровень спортивной квалификации для взрослых спортсменов.",
+      "1 юношеский разряд": "Первый юношеский разряд — высший уровень среди юношеских категорий.",
+      "2 юношеский разряд": "Второй юношеский разряд — средний уровень подготовки для детей и подростков.",
+      "3 юношеский разряд": "Третий юношеский разряд — начальный уровень спортивной квалификации для юных спортсменов.",
+      "status": "Официальный статус руководителя, определяющий развитие каратэ в регионе.",
+      "belt": "Высшая ступень технического мастерства и знаний боевого искусства."
+    };
 
-  uModalBadges.innerHTML = "";
-  if (card.dataset.badges) {
-    try {
-      const badges = JSON.parse(card.dataset.badges);
-      badges.forEach((b, i) => {
-        const badge = document.createElement("span");
-        badge.classList.add("badge", b.type);
-        badge.style.animation = `badgePop 0.4s ease ${i * 0.15}s forwards`;
+    const openUModal = card => {
+      uModalImg.src = card.dataset.img || "";
+      uModalName.textContent = card.dataset.name || "";
+      uModalRole.textContent = card.dataset.role || "";
+      uModalInfo.textContent = card.dataset.info || "";
+      uModalComment.textContent = card.dataset.comment || "";
 
-        if (b.type === "gold") {
-          badge.textContent = `🥇 ${b.count}`;
-          badge.setAttribute("data-info", `Золотых медалей: ${b.count}`);
+      uModalBadges.innerHTML = "";
+      if (card.dataset.badges) {
+        try {
+          const badges = JSON.parse(card.dataset.badges);
+          badges.forEach((b, i) => {
+            const badge = document.createElement("span");
+            badge.classList.add("badge", b.type);
+            badge.style.animation = `badgePop 0.4s ease ${i * 0.15}s forwards`;
+
+            if (b.type === "gold") {
+              badge.textContent = `🥇 ${b.count}`;
+              badge.setAttribute("data-info", `${b.label || "Золотых медалей"}: ${b.count}`);
+            }
+            if (b.type === "silver") {
+              badge.textContent = `🥈 ${b.count}`;
+              badge.setAttribute("data-info", `Серебряных медалей: ${b.count}`);
+            }
+            if (b.type === "bronze") {
+              badge.textContent = `🥉 ${b.count}`;
+              badge.setAttribute("data-info", `Бронзовых медалей: ${b.count}`);
+            }
+            if (b.type === "title") {
+              badge.textContent = `🏅 ${b.label}`;
+              const desc = titleDescriptions[b.label] || `Звание: ${b.label}`;
+              badge.setAttribute("data-info", desc);
+            }
+            if (b.type === "status") {
+              badge.textContent = `🏛️ ${b.label}`;
+              badge.setAttribute("data-info", titleDescriptions.status);
+            }
+            if (b.type === "belt") {
+              badge.textContent = `🥋 ${b.label}`;
+              badge.setAttribute("data-info", `${titleDescriptions.belt} (${b.label})`);
+            }
+
+            uModalBadges.appendChild(badge);
+          });
+        } catch (e) {
+          console.warn("Ошибка парсинга бейджей:", e);
         }
-        if (b.type === "silver") {
-          badge.textContent = `🥈 ${b.count}`;
-          badge.setAttribute("data-info", `Серебряных медалей: ${b.count}`);
-        }
-        if (b.type === "bronze") {
-          badge.textContent = `🥉 ${b.count}`;
-          badge.setAttribute("data-info", `Бронзовых медалей: ${b.count}`);
-        }
-        if (b.type === "title") {
-          badge.textContent = `🏅 ${b.label}`;
-          // Если есть расшифровка — используем её, иначе просто "Звание: ..."
-          const desc = titleDescriptions[b.label] || `Звание: ${b.label}`;
-          badge.setAttribute("data-info", desc);
-        }
+      }
+      uModalBadges.style.display = uModalBadges.children.length ? "flex" : "none";
 
-        uModalBadges.appendChild(badge);
-      });
-    } catch (e) {
-      console.warn("Ошибка парсинга бейджей:", e);
-    }
+      uModal.classList.add("show");
+      uModal.style.display = "flex";
+      document.body.classList.add("no-scroll");
+
+      if (trainerSound) {
+        trainerSound.volume = 0.4;
+        trainerSound.currentTime = 0;
+        trainerSound.play();
+      }
+    };
+
+    const closeUModal = () => {
+      uModal.classList.remove("show");
+      document.body.classList.remove("no-scroll");
+      setTimeout(() => { uModal.style.display = "none"; }, 300);
+
+      if (trainerSound) {
+        trainerSound.pause();
+        trainerSound.currentTime = 0;
+      }
+    };
+
+    document.addEventListener("click", e => {
+      const card = e.target.closest(".card-item");
+      if (card) {
+        openUModal(card);
+      }
+    });
+
+    if (uModalClose) uModalClose.addEventListener("click", closeUModal);
+    uModal.addEventListener("click", e => { if (e.target === uModal) closeUModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeUModal(); });
   }
-  uModalBadges.style.display = uModalBadges.children.length ? "flex" : "none";
-
-  uModal.classList.add("show");
-  uModal.style.display = "flex";
-  document.body.classList.add("no-scroll");
-
-  if (trainerSound) {
-    trainerSound.volume = 0.4;
-    trainerSound.currentTime = 0;
-    trainerSound.play();
-  }
-}
-
-  function closeUModal() {
-    uModal.classList.remove("show");
-    document.body.classList.remove("no-scroll");
-    setTimeout(() => uModal.style.display = "none", 300);
-
-    if (trainerSound) {
-      trainerSound.pause();
-      trainerSound.currentTime = 0;
-    }
-  }
-
-  document.querySelectorAll(".card-item").forEach(card => {
-    card.addEventListener("click", () => openUModal(card));
-  });
-
-  uModalClose.addEventListener("click", closeUModal);
-  uModal.addEventListener("click", e => { if (e.target === uModal) closeUModal(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeUModal(); });
-}
-
- /* =========================
-     Модалка для событий
-  ========================= */
 
   /* =========================
      Переключатель темы
   ========================= */
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggle = qs("#theme-toggle");
   if (themeToggle) {
-    // Установка иконки на основе текущей темы
-    const isDark = document.body.classList.contains('dark');
-    themeToggle.textContent = isDark ? '🌞' : '🌙';
+    const isDark = document.body.classList.contains("dark");
+    themeToggle.textContent = isDark ? "🌞" : "🌙";
 
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const isDarkNow = document.body.classList.contains('dark');
-      themeToggle.textContent = isDarkNow ? '🌞' : '🌙';
-      localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
-    });
-
-    // Двойной клик для сброса к автоматической теме
-    themeToggle.addEventListener('dblclick', () => {
-      localStorage.removeItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.body.classList.toggle('dark', prefersDark);
-      themeToggle.textContent = prefersDark ? '🌞' : '🌙';
-      alert('Тема сброшена к системным настройкам');
-    });
-  }
-  /* =========================
-     Обработка формы
-  ========================= */
-  const signupForm = document.getElementById("signup-form");
-  if (signupForm) {
-    signupForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const status = document.getElementById("form-status");
-
-      fetch("signup.php", { method: "POST", body: formData })
-        .then(res => res.text())
-        .then(data => {
-          if (data.trim() === "OK") {
-            status.textContent = "Спасибо! Ваша заявка отправлена.";
-            status.style.color = "green";
-            this.reset();
-          } else {
-            status.textContent = "Ошибка отправки. Попробуйте позже.";
-            status.style.color = "red";
-          }
-        })
-        .catch(() => {
-          status.textContent = "Ошибка соединения.";
-          status.style.color = "red";
-        });
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDarkNow = document.body.classList.contains("dark");
+      themeToggle.textContent = isDarkNow ? "🌞" : "🌙";
+      localStorage.setItem("theme", isDarkNow ? "dark" : "light");
     });
   }
 
   /* =========================
      Слайдер отзывов (автопереключение)
   ========================= */
-  const testimonials = document.querySelectorAll(".testimonial");
+  const testimonials = qsa(".testimonial");
   let testimonialIndex = 0;
   if (testimonials.length) {
     testimonials[testimonialIndex].classList.add("active");
@@ -331,39 +274,43 @@ if (uModal) {
       testimonials[testimonialIndex].classList.add("active");
     }, 5000);
   }
-// создаём модалку один раз
-const photoModal = document.createElement("div");
-photoModal.id = "photo-modal";
-photoModal.innerHTML = `
-  <div class="photo-overlay"></div>
-  <img id="photo-modal-img" src="" alt="Фото">
-`;
-document.body.appendChild(photoModal);
 
-const modalImg = document.getElementById("photo-modal-img");
-const overlay = photoModal.querySelector(".photo-overlay");
+  /* =========================
+     Модалка для фото
+  ========================= */
+  const zoomImages = qsa(".about-media img, .event-card img");
+  if (zoomImages.length) {
+    const photoModal = document.createElement("div");
+    photoModal.id = "photo-modal";
+    photoModal.innerHTML = `
+      <div class="photo-overlay"></div>
+      <img id="photo-modal-img" src="" alt="Фото">
+    `;
+    document.body.appendChild(photoModal);
 
-// обработка клика по фото
-document.querySelectorAll(".about-media img, .event-card img").forEach(img => {
-  img.style.cursor = "zoom-in"; // курсор увеличения
-  img.addEventListener("click", () => {
-    modalImg.src = img.src;
-    photoModal.classList.add("show");
-    document.body.classList.add("no-scroll");
-  });
-});
+    const modalImg = qs("#photo-modal-img");
+    const overlay = qs(".photo-overlay", photoModal);
 
-// закрытие по клику на фон
-overlay.addEventListener("click", () => {
-  photoModal.classList.remove("show");
-  document.body.classList.remove("no-scroll");
-});
+    zoomImages.forEach(img => {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", () => {
+        modalImg.src = img.src;
+        photoModal.classList.add("show");
+        document.body.classList.add("no-scroll");
+      });
+    });
+
+    overlay.addEventListener("click", () => {
+      photoModal.classList.remove("show");
+      document.body.classList.remove("no-scroll");
+    });
+  }
 
   /* =========================
      Плавающие иконки
   ========================= */
   const icons = ["🥋", "🥇", "🥊"];
-  const floatingContainer = document.querySelector(".floating-icons");
+  const floatingContainer = qs(".floating-icons");
   if (floatingContainer) {
     for (let i = 0; i < 10; i++) {
       const span = document.createElement("span");
@@ -375,7 +322,9 @@ overlay.addEventListener("click", () => {
     }
   }
 
-  // Load club achievements from JSON (medals, titles, dans)
+  /* =========================
+     Загрузка достижений клуба из JSON
+  ========================= */
   function renderBenefitItems(container, items) {
     if (!container || !Array.isArray(items)) return;
     container.innerHTML = "";
@@ -401,9 +350,9 @@ overlay.addEventListener("click", () => {
     });
   }
 
-  const clubSection = document.getElementById("club-achievements");
+  const clubSection = qs("#club-achievements");
   if (clubSection) {
-    const grids = clubSection.querySelectorAll(".benefits-grid.achievements-grid");
+    const grids = qsa(".benefits-grid.achievements-grid", clubSection);
     if (grids.length >= 3) {
       fetch("/data/club-achievements.json")
         .then(res => (res.ok ? res.json() : null))
@@ -417,49 +366,59 @@ overlay.addEventListener("click", () => {
     }
   }
 
-});
+  /* =========================
+     Редактирование разделов (admin)
+  ========================= */
+  const editModal = qs("#edit-modal");
+  const editTextarea = qs("#edit-textarea");
+  const saveEditBtn = qs("#save-edit");
+  const editButtons = qsa(".edit-btn");
+  const editModalClose = editModal ? qs(".modal-close", editModal) : null;
+  let currentSection = null;
 
-// Редактирование контента
-document.addEventListener('DOMContentLoaded', () => {
-  const editModal = document.getElementById('edit-modal');
-  const editTextarea = document.getElementById('edit-textarea');
-  const saveEditBtn = document.getElementById('save-edit');
-  let currentSection = '';
+  const openEditModal = sectionId => {
+    const section = qs(`#${sectionId}`);
+    if (!section) return;
 
-  // Админ-вход отключён: кнопка входа удалена, режим администратора не активируется
+    currentSection = sectionId;
+    editTextarea.value = section.innerHTML;
+    editModal.classList.add("show");
+    editModal.style.display = "flex";
+    document.body.classList.add("no-scroll");
+  };
 
-  document.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      currentSection = e.target.dataset.section;
-      const section = document.getElementById(currentSection);
-      const content = section.innerHTML;
-      editTextarea.value = content;
-      editModal.classList.add('show');
-      editModal.style.display = 'flex';
-      document.body.classList.add('no-scroll');
+  const closeEditModal = () => {
+    editModal.classList.remove("show");
+    editModal.style.display = "none";
+    document.body.classList.remove("no-scroll");
+  };
+
+  if (editModal && editTextarea && saveEditBtn && editButtons.length) {
+    editButtons.forEach(btn => {
+      btn.addEventListener("click", () => openEditModal(btn.dataset.section));
     });
-  });
 
-  editModal.querySelector('.modal-close').addEventListener('click', () => {
-    editModal.classList.remove('show');
-    editModal.style.display = 'none';
-    document.body.classList.remove('no-scroll');
-  });
+    if (editModalClose) editModalClose.addEventListener("click", closeEditModal);
+    editModal.addEventListener("click", e => {
+      if (e.target === editModal) closeEditModal();
+    });
 
-  saveEditBtn.addEventListener('click', () => {
-    const newContent = editTextarea.value;
-    localStorage.setItem(currentSection + '_content', newContent);
-    document.getElementById(currentSection).innerHTML = newContent;
-    editModal.classList.remove('show');
-    editModal.style.display = 'none';
-    document.body.classList.remove('no-scroll');
-  });
+    saveEditBtn.addEventListener("click", () => {
+      if (!currentSection) return;
+      const newContent = editTextarea.value;
+      localStorage.setItem(`${currentSection}_content`, newContent);
+      const section = qs(`#${currentSection}`);
+      if (section) section.innerHTML = newContent;
+      closeEditModal();
+    });
+  }
 
   // Загрузка сохранённого контента
-  ['trainers', 'achievements', 'club-achievements'].forEach(section => {
-    const saved = localStorage.getItem(section + '_content');
-    if (saved) {
-      document.getElementById(section).innerHTML = saved;
+  ["trainers", "achievements", "club-achievements"].forEach(sectionId => {
+    const saved = localStorage.getItem(`${sectionId}_content`);
+    const section = qs(`#${sectionId}`);
+    if (saved && section) {
+      section.innerHTML = saved;
     }
   });
 });
