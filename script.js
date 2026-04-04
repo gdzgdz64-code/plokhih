@@ -268,12 +268,13 @@
   ========================= */
   const themeToggle = qs("#theme-toggle");
   if (themeToggle) {
-    const isDark = document.body.classList.contains("dark");
+    const isDark = document.documentElement.classList.contains("dark");
     themeToggle.textContent = isDark ? "🌞" : "🌙";
 
     themeToggle.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
       document.body.classList.toggle("dark");
-      const isDarkNow = document.body.classList.contains("dark");
+      const isDarkNow = document.documentElement.classList.contains("dark");
       themeToggle.textContent = isDarkNow ? "🌞" : "🌙";
       localStorage.setItem("theme", isDarkNow ? "dark" : "light");
     });

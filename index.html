@@ -43,14 +43,181 @@
   ]
 }
 </script>
-</script>
   <!-- preconnect to external hosts -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://cdn.vercel-analytics.com" crossorigin>
   <!-- preload critical assets -->
   <link rel="preload" as="image" href="media/fon.webp">
-  <link rel="preload" href="style.css" as="style" onload="this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="style.css"></noscript>
+  <style>
+    html {
+      scroll-behavior: smooth;
+      background: #000;
+    }
+
+    :root {
+      --neutral: #1a1a1a;
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #5a5a5a;
+      --primary: #c41e3a;
+      --primary-dark: #8b0000;
+      --accent: #ffffff;
+      --card: #f9f9f9;
+      --card-hover: #f0f0f0;
+      --shadow: rgba(0, 0, 0, 0.12);
+      --photo-bg: #f5f5f5;
+      --border: #e0e0e0;
+      --dark: #111;
+      --link-color: #1a73e8;
+    }
+
+    body,
+    html.dark body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    html.dark body {
+      --neutral: #f5f5f5;
+      --bg: #0f0f0f;
+      --photo-bg: #1a1a1a;
+      --text: #f5f5f5;
+      --text-muted: #b0b0b0;
+      --primary: #ff3a4a;
+      --primary-dark: #cc1a2a;
+      --accent: #ffffff;
+      --card: #1a1a1a;
+      --card-hover: #2a2a2a;
+      --shadow: rgba(255, 255, 255, 0.08);
+      --border: #333333;
+      --dark: #000;
+      --link-color: #90caf9;
+    }
+
+    #hero {
+      position: relative;
+      background: url('media/fon.webp') center center / cover no-repeat;
+      background-color: #000;
+      box-sizing: border-box;
+      padding-top: 50px;
+      padding-bottom: 60px;
+      min-height: 110vh;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 80px 20px 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+
+    #hero h1 {
+      font-size: 2.5rem;
+      margin: 0 0 15px;
+      color: #fff;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    #hero p {
+      font-size: 1.2rem;
+      margin: 0 0 25px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: filter 0.3s ease, transform 0.25s ease, box-shadow 0.35s ease;
+      touch-action: manipulation;
+    }
+
+    .btn.red {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn.dark {
+      background: var(--dark);
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    @media (max-width: 768px) {
+      #hero {
+        min-height: 80vh;
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+
+      .hero-content {
+        padding: 40px 20px 20px;
+      }
+
+      .glass {
+        padding: 10px 14px;
+      }
+
+      #hero h1 {
+        font-size: 1.8rem;
+      }
+
+      #hero p {
+        font-size: 1rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
   <link rel="icon" href="media/iconka.ico" type="image/png">
 <meta property="og:title" content='Карате клуб Плохиш — Федерация каратэ WKC Курской области'>
 <meta property="og:description" content="Тренировки по каратэ для детей и взрослых в Курске. Федерация WKC. Победы, дисциплина и развитие характера.">
@@ -72,15 +239,20 @@
   (function() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
-      document.body.classList.toggle('dark', savedTheme === 'dark');
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.classList.add('dark');
+      document.documentElement.classList.add('dark');
     }
   })();
 </script>
 
 </head>
 <body>
+<script>
+  if (document.documentElement.classList.contains('dark')) {
+    document.body.classList.add('dark');
+  }
+</script>
 
 <!-- Hero -->
 <header id="hero">
@@ -742,10 +914,6 @@
     </div>
   </div>
 </div>
-<audio id="trainer-sound" src="media/proverka-akustiki-5_1-test-shinco-5_1.mp3"></audio>
-    <blockquote id="u-modal-comment"></blockquote>
-  </div>
-</div>
 
 <div id="timeline-modal" class="modal">
   <div class="modal-content">
@@ -772,12 +940,9 @@
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="script.js" defer></script>
-<script src="main.js" defer></script>
 
 <!-- Vercel Analytics -->
 <script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
 
 </body>
 </html>
-
-<script async data-explicit-opt-in="true" data-deployment-id="dpl_2zmfTUKgRQgQmeFrRMY2MUvu9B9d" src="https://vercel.live/_next-live/feedback/feedback.js"></script>

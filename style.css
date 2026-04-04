@@ -20,7 +20,8 @@
   --dark: #111;
   --link-color: #1a73e8;
 }
-body.dark {
+body.dark,
+html.dark body {
   --neutral: #f5f5f5;
   --bg: #0f0f0f;
   --photo-bg: #1a1a1a;
@@ -69,6 +70,12 @@ body {
   max-width: 1100px;
   margin: auto;
   padding: 20px;
+}
+
+section,
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 /* hero background */
